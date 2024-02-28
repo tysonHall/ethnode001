@@ -32,7 +32,20 @@ app.get('/t', async (req, res) => {
     };
     let rawTransasction = await wallet.signTransaction(transaction);
 
-    res.send('rawTransasction ' + rawTransasction);
+    res.send(rawTransasction);
+});
+
+
+app.get('/a', async (req, res) => {
+    console.log(req.query);
+    if(req.query.privatekey == undefined) {
+        res.send("参数错误");
+        return;
+    }
+    let privatekey = req.query.privatekey;
+    let wallet = new ethers.Wallet(privatekey);
+
+    res.send(wallet.address);
 });
 
 const server = app.listen(3000, () => {
